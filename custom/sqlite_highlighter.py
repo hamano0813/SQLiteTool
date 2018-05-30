@@ -221,8 +221,8 @@ class SQLiteHighlighter(QSyntaxHighlighter):
         typename_format.setFontWeight(QFont.ExtraBold)
 
         self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), typename_format) for pattern in typenames])
-        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), keyword_format) for pattern in keywords])
         self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), function_format) for pattern in functions])
+        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), keyword_format) for pattern in keywords])
         self.rules.append((QRegExp('\\[([^\\[\\]]*)\\]'), name_format))
         self.rules.append((QRegExp('--(\\w|\\W|[\\u4e00-\\u9fa5])*$', Qt.CaseInsensitive), comment_format))
 
