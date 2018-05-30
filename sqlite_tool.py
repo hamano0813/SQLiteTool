@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QApplication, QStyleFactory
 import sys
 from program import MainWindow
 
+__author__ = 'Hamano'
+__version__ = '0.9'
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
