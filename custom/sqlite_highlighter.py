@@ -7,10 +7,10 @@ from PyQt5.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
 
 class SQLiteHighlighter(QSyntaxHighlighter):
     rules = []
-    normal_format = QTextCharFormat()
-    normal_format.setFont(QFont('Consolas'))
-    normal_format.setFontWeight(QFont.Bold)
-    normal_format.setFontPointSize(11)
+    normal_fmt = QTextCharFormat()
+    normal_fmt.setFont(QFont('Consolas'))
+    normal_fmt.setFontWeight(QFont.Bold)
+    normal_fmt.setFontPointSize(11)
 
     def __init__(self, parent=None):
         super(SQLiteHighlighter, self).__init__(parent)
@@ -206,28 +206,28 @@ class SQLiteHighlighter(QSyntaxHighlighter):
             'DATETIME'
         )
 
-        keyword_format = QTextCharFormat(self.normal_format)
-        keyword_format.setForeground(Qt.blue)
-        keyword_format.setFontWeight(QFont.ExtraBold)
-        function_format = QTextCharFormat(self.normal_format)
-        function_format.setForeground(Qt.darkGreen)
-        comment_format = QTextCharFormat(self.normal_format)
-        comment_format.setForeground(Qt.gray)
-        comment_format.setFontItalic(True)
-        name_format = QTextCharFormat(self.normal_format)
-        name_format.setForeground(Qt.red)
-        typename_format = QTextCharFormat(self.normal_format)
-        typename_format.setForeground(Qt.magenta)
-        typename_format.setFontWeight(QFont.ExtraBold)
+        kw_fmt = QTextCharFormat(self.normal_fmt)
+        kw_fmt.setForeground(Qt.blue)
+        kw_fmt.setFontWeight(QFont.ExtraBold)
+        func_fmt = QTextCharFormat(self.normal_fmt)
+        func_fmt.setForeground(Qt.darkGreen)
+        cmt_fmt = QTextCharFormat(self.normal_fmt)
+        cmt_fmt.setForeground(Qt.gray)
+        cmt_fmt.setFontItalic(True)
+        name_fmt = QTextCharFormat(self.normal_fmt)
+        name_fmt.setForeground(Qt.red)
+        tname_fmt = QTextCharFormat(self.normal_fmt)
+        tname_fmt.setForeground(Qt.magenta)
+        tname_fmt.setFontWeight(QFont.ExtraBold)
 
-        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), typename_format) for pattern in typenames])
-        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), function_format) for pattern in functions])
-        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), keyword_format) for pattern in keywords])
-        self.rules.append((QRegExp('\\[([^\\[\\]]*)\\]'), name_format))
-        self.rules.append((QRegExp('--(\\w|\\W|[\\u4e00-\\u9fa5])*$', Qt.CaseInsensitive), comment_format))
+        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), tname_fmt) for pattern in typenames])
+        self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), kw_fmt) for pattern in keywords])
+        self.rules.extend([(QRegExp(f'\\b{pattern}(?=\\()', Qt.CaseInsensitive), func_fmt) for pattern in functions])
+        self.rules.append((QRegExp('\\[([^\\[\\]]*)\\]'), name_fmt))
+        self.rules.append((QRegExp('--(\\w|\\W|[\\u4e00-\\u9fa5])*$', Qt.CaseInsensitive), cmt_fmt))
 
     def highlightBlock(self, text):
-        self.setFormat(0, len(text), self.normal_format)
+        self.setFormat(0, len(text), self.normal_fmt)
         for pattern, format_name in self.rules:
             expression = QRegExp(pattern)
             index = expression.indexIn(text)
