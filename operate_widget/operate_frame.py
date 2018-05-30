@@ -19,11 +19,11 @@ class OperateFrame(QFrame):
         self.stmt_text.setFixedSize(860, 585)
         self.stmt_text.setStatusTip('split with ";"')
         self.highlighter = SQLiteHighlighter(self.stmt_text.document())
-        save_button = QPushButton('Save')
+        save_button = QPushButton('&Save')
         save_button.setFixedWidth(100)
-        load_button = QPushButton('Load')
+        load_button = QPushButton('&Load')
         load_button.setFixedWidth(100)
-        execute_button = QPushButton('Execute')
+        execute_button = QPushButton('&Execute')
         execute_button.setFixedWidth(100)
         button_layout = QHBoxLayout()
         button_layout.addStretch()
@@ -45,16 +45,12 @@ class OperateFrame(QFrame):
         execute_button.clicked.connect(self.execute_stmt)
 
     def execute_stmt(self):
-        self.sender().setEnabled(False)
-        self.sender().setText('Executing...')
         c = self.conn.cursor()
         for stmt in self.stmt_text.toPlainText().rstrip(';').split(';'):
             try:
                 c.execute(stmt.strip('\n') + ';')
             except sqlite3.OperationalError as error:
                 QMessageBox().warning(self, 'Error', f'{error}', QMessageBox.Close)
-        self.sender().setText('Execute')
-        self.sender().setEnabled(True)
         c.close()
         return self.conn.commit()
 
