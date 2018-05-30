@@ -46,7 +46,7 @@ class PreviewFrame(QFrame):
         select_button.clicked.connect(self.preview_sql)
 
     def preview_sql(self):
-        if self.select_text.toPlainText().lstrip()[0:6].upper() == 'SELECT':
+        if self.select_text.toPlainText().lstrip()[0:6].upper().startswith('SELECT'):
             c = self.conn.cursor()
             c.execute('DROP VIEW IF EXISTS temp;')
             try:
