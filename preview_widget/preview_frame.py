@@ -23,7 +23,7 @@ class PreviewFrame(QFrame):
         select_button.setFixedWidth(100)
         select_layout = QHBoxLayout()
         select_layout.addWidget(self.select_text, alignment=Qt.AlignCenter)
-        select_layout.addWidget(select_button, alignment=Qt.AlignCenter|Qt.AlignTop)
+        select_layout.addWidget(select_button, alignment=Qt.AlignCenter | Qt.AlignTop)
         select_group.setLayout(select_layout)
         select_group.setFixedWidth(884)
 

@@ -8,14 +8,13 @@ from PyQt5.QtGui import QFont, QSyntaxHighlighter, QTextCharFormat
 class SQLiteHighlighter(QSyntaxHighlighter):
     rules = []
     normal_format = QTextCharFormat()
-    normal_format.setFont(QFont('Lucida Sans Typewriter'))
     normal_format.setFont(QFont('Consolas'))
     normal_format.setFontWeight(QFont.Bold)
     normal_format.setFontPointSize(12)
 
     def __init__(self, parent=None):
         super(SQLiteHighlighter, self).__init__(parent)
-        keywords = [
+        keywords = (
             'ABORT',
             'ACTION',
             'ADD',
@@ -140,8 +139,8 @@ class SQLiteHighlighter(QSyntaxHighlighter):
             'WHERE',
             'WITH',
             'WITHOUT'
-        ]
-        functions = [
+        )
+        functions = (
             'abs',
             'changes',
             'char',
@@ -193,8 +192,8 @@ class SQLiteHighlighter(QSyntaxHighlighter):
             'group_concat',
             'sum',
             'total'
-        ]
-        typenames = [
+        )
+        typenames = (
             'INT',
             'INTEGER',
             'TEXT',
@@ -205,7 +204,7 @@ class SQLiteHighlighter(QSyntaxHighlighter):
             'BOOLEAN',
             'DATE',
             'DATETIME'
-        ]
+        )
 
         keyword_format = QTextCharFormat(self.normal_format)
         keyword_format.setForeground(Qt.blue)
