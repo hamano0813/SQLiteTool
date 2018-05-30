@@ -99,5 +99,6 @@ class MainWindow(QWidget):
 
     def closeEvent(self, event):
         if self.import_frame.isEnabled():
+            self.conn.execute('VACUUM')
             self.conn.close()
         event.accept()

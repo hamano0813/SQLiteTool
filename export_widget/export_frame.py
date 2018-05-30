@@ -74,7 +74,7 @@ class ExportFrame(QFrame):
     def get_table(self):
         c = self.conn.cursor()
         tables = [t[1] for t in c.execute('SELECT * FROM sqlite_master;').fetchall()
-                  if t[0] in ('table', 'view') and t[1] not in ('sqlite_sequence')]
+                  if t[0] in ('table', 'view') and t[1] not in ('sqlite_sequence',)]
         self.table_combo.disconnect()
         self.table_combo.clear()
         self.table_combo.addItems(tables)

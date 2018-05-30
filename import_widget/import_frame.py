@@ -18,6 +18,7 @@ from import_widget.import_delegate import TypeDelegate
 class ImportFrame(QFrame):
     conn: sqlite3.Connection = None
     path: str = './'
+    setting_file_path: str = None
     import_wb: Workbook = None
     import_ws: Worksheet = None
     model = ImportModel([])
@@ -132,7 +133,17 @@ class ImportFrame(QFrame):
         file_path: str = QFileDialog.getOpenFileName(self.parent(), 'Load Setting', './setting', 'Setting File(*.stg)',
                                                      options=QFileDialog.DontConfirmOverwrite)[0]
         if file_path:
+            self.setting_file_path = file_path
             file = open(file_path, 'rb')
+            load_settings = pickle.load(file)
+            self.name_line.setText(load_settings[0])
+            self.header_spin.setValue(load_settings[1])
+            self.model.table_settings = load_settings[2]
+            self.column_view.reset()
+
+    def auto_load(self):
+        if self.setting_file_path:
+            file = open(self.setting_file_path, 'rb')
             load_settings = pickle.load(file)
             self.name_line.setText(load_settings[0])
             self.header_spin.setValue(load_settings[1])
