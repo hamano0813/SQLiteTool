@@ -10,7 +10,7 @@ class SQLiteHighlighter(QSyntaxHighlighter):
     normal_format = QTextCharFormat()
     normal_format.setFont(QFont('Consolas'))
     normal_format.setFontWeight(QFont.Bold)
-    normal_format.setFontPointSize(12)
+    normal_format.setFontPointSize(11)
 
     def __init__(self, parent=None):
         super(SQLiteHighlighter, self).__init__(parent)
