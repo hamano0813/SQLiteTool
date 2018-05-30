@@ -70,6 +70,7 @@ class ExportFrame(QFrame):
         self.table_combo.currentTextChanged.connect(self.get_data)
         file_button.clicked.connect(self.export_file)
         self.export_button.clicked.connect(self.export_table)
+        self.save_button.clicked.connect(self.save_file)
 
     def get_table(self):
         c = self.conn.cursor()
@@ -121,13 +122,14 @@ class ExportFrame(QFrame):
             self.save_button.setEnabled(True)
 
     def save_file(self):
+        self.writer.close()
         if self.writer:
             wb = load_workbook(self.file_path)
             for ws in wb.worksheets:
                 self.format_sheet(ws)
-                wb.save(self.file_path)
-                wb.close()
-                os.startfile(self.file_path)
+            wb.save(self.file_path)
+            wb.close()
+            os.startfile(self.file_path)
 
     def format_sheet(self, worksheet):
         for col in worksheet.columns:
