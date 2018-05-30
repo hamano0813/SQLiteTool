@@ -10,7 +10,7 @@ from custom import SQLiteHighlighter
 
 class OperateFrame(QFrame):
     conn: sqlite3.connect = None
-    path: str = './setting'
+    path: str = './setting/'
 
     def __init__(self, *args):
         super(OperateFrame, self).__init__(*args)

@@ -125,7 +125,7 @@ class ImportFrame(QFrame):
         self.sender().setEnabled(True)
 
     def save_setting(self):
-        file_path: str = QFileDialog.getSaveFileName(self.parent(), 'Save Setting', './setting', 'Setting File(*.stg)',
+        file_path: str = QFileDialog.getSaveFileName(self.parent(), 'Save Setting', './setting/', 'Setting File(*.stg)',
                                                      options=QFileDialog.DontConfirmOverwrite)[0]
         if file_path:
             save_settings = [self.name_line.text(), self.header_spin.value(), self.model.table_settings]
@@ -134,7 +134,7 @@ class ImportFrame(QFrame):
             file.close()
 
     def load_setting(self):
-        file_path: str = QFileDialog.getOpenFileName(self.parent(), 'Load Setting', './setting', 'Setting File(*.stg)',
+        file_path: str = QFileDialog.getOpenFileName(self.parent(), 'Load Setting', './setting/', 'Setting File(*.stg)',
                                                      options=QFileDialog.DontConfirmOverwrite)[0]
         if file_path:
             self.setting_file_path = file_path
