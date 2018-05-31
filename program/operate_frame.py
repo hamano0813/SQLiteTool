@@ -3,7 +3,6 @@
 
 import sqlite3
 from PyQt5.QtWidgets import QFrame, QGroupBox, QPushButton, QFileDialog, QHBoxLayout, QMessageBox, QGridLayout
-from PyQt5.QtCore import Qt
 from program.sqlite_highlighter import SQLiteHighlighter
 from program.sqlite_completer import SQLiteCompleterText
 
@@ -27,16 +26,16 @@ class OperateFrame(QFrame):
         execute_button.setFixedWidth(100)
         button_layout = QHBoxLayout()
         button_layout.addStretch()
-        button_layout.addWidget(save_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(load_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(execute_button, alignment=Qt.AlignRight)
+        button_layout.addWidget(save_button)
+        button_layout.addWidget(load_button)
+        button_layout.addWidget(execute_button)
         sql_layout = QGridLayout()
-        sql_layout.addWidget(self.stmt_text, 0, 0, 1, 1)
-        sql_layout.addLayout(button_layout, 1, 0, 1, 1)
+        sql_layout.addWidget(self.stmt_text, 0, 0)
+        sql_layout.addLayout(button_layout, 1, 0)
         sql_group.setLayout(sql_layout)
 
         main_layout = QGridLayout()
-        main_layout.addWidget(sql_group, 0, 0, 1, 1)
+        main_layout.addWidget(sql_group, 0, 0)
         self.setLayout(main_layout)
 
         save_button.clicked.connect(self.save_sql)
@@ -48,8 +47,8 @@ class OperateFrame(QFrame):
         for stmt in self.stmt_text.toPlainText().rstrip(';').split(';'):
             try:
                 c.execute(stmt.strip('\n') + ';')
-            except sqlite3.OperationalError as error:
-                QMessageBox().warning(self, 'Error', f'{error}', QMessageBox.Close)
+            except sqlite3.OperationalError as e:
+                QMessageBox().warning(self, 'Error', f'{e}', QMessageBox.Close)
         c.close()
         return self.conn.commit()
 

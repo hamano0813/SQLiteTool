@@ -25,9 +25,9 @@ class MainWindow(QWidget):
         connect_button.setFixedWidth(100)
         connect_button.setCheckable(True)
         database_layout = QGridLayout()
-        database_layout.addWidget(self.file_path, 0, 0, 1, 1)
-        database_layout.addWidget(self.new_button, 0, 1, 1, 1)
-        database_layout.addWidget(connect_button, 0, 2, 1, 1)
+        database_layout.addWidget(self.file_path, 0, 0)
+        database_layout.addWidget(self.new_button, 0, 1)
+        database_layout.addWidget(connect_button, 0, 2)
         database_group.setLayout(database_layout)
 
         self.tab = QTabWidget()
@@ -45,8 +45,8 @@ class MainWindow(QWidget):
         self.tab.addTab(self.export_frame, 'Export Data')
 
         main_layout = QGridLayout()
-        main_layout.addWidget(database_group, 0, 0, 1, 1)
-        main_layout.addWidget(self.tab, 1, 0, 1, 1)
+        main_layout.addWidget(database_group, 0, 0)
+        main_layout.addWidget(self.tab, 1, 0)
         self.setLayout(main_layout)
         self.setWindowTitle('SQLite Tool')
         self.new_button.clicked.connect(self.new_database)

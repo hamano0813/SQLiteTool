@@ -22,7 +22,7 @@ class PreviewFrame(QFrame):
         select_button = QPushButton('&View')
         select_button.setFixedWidth(100)
         select_layout = QGridLayout()
-        select_layout.addWidget(self.select_text, 0, 0, 1, 1)
+        select_layout.addWidget(self.select_text, 0, 0)
         select_layout.addWidget(select_button, 0, 1, 1, 1, Qt.AlignTop)
         select_group.setLayout(select_layout)
 
@@ -30,19 +30,19 @@ class PreviewFrame(QFrame):
         self.preview_view = QTableView()
         self.row_label = QLabel()
         preview_layout = QGridLayout()
-        preview_layout.addWidget(self.preview_view, 0, 0, 1, 1)
+        preview_layout.addWidget(self.preview_view, 0, 0)
         preview_layout.addWidget(self.row_label, 1, 0, 1, 1, Qt.AlignLeft)
         preview_group.setLayout(preview_layout)
 
         main_layout = QGridLayout()
-        main_layout.addWidget(select_group, 0, 0, 1, 1)
-        main_layout.addWidget(preview_group, 1, 0, 1, 1)
+        main_layout.addWidget(select_group, 0, 0)
+        main_layout.addWidget(preview_group, 1, 0)
         self.setLayout(main_layout)
 
         select_button.clicked.connect(self.preview_sql)
 
     def preview_sql(self):
-        if self.select_text.toPlainText().lstrip()[0:6].upper().startswith('SELECT'):
+        if self.select_text.toPlainText().lstrip().upper().startswith('SELECT'):
             c = self.conn.cursor()
             c.execute('DROP VIEW IF EXISTS temp;')
             try:
@@ -56,7 +56,7 @@ class PreviewFrame(QFrame):
                     self.row_label.setText(f'{len(data)} result')
                 else:
                     QMessageBox().information(self, 'Error', 'No Result', QMessageBox.Close)
-            except sqlite3.OperationalError as error:
-                QMessageBox().warning(self, 'Error', f'{error}', QMessageBox.Close)
+            except sqlite3.OperationalError as e:
+                QMessageBox().warning(self, 'Error', f'{e}', QMessageBox.Close)
             c.execute('DROP VIEW IF EXISTS temp;')
             c.close()

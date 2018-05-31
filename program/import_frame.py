@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 from PyQt5.QtWidgets import (QFrame, QGroupBox, QLineEdit, QComboBox, QSpinBox, QTableView, QPushButton, QFileDialog,
                              QFormLayout, QHBoxLayout, QGridLayout, QSizePolicy)
-from PyQt5.QtCore import Qt
 from openpyxl import load_workbook
 from openpyxl.workbook.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
@@ -33,8 +32,8 @@ class ImportFrame(QFrame):
         file_button = QPushButton('Load')
         file_button.setFixedWidth(100)
         file_layout = QGridLayout()
-        file_layout.addWidget(self.file_line, 0, 0, 1, 1)
-        file_layout.addWidget(file_button, 0, 1, 1, 1)
+        file_layout.addWidget(self.file_line, 0, 0)
+        file_layout.addWidget(file_button, 0, 1)
         file_group.setLayout(file_layout)
         file_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
@@ -63,20 +62,20 @@ class ImportFrame(QFrame):
         import_button.setFixedWidth(100)
         button_layout = QHBoxLayout()
         button_layout.addStretch()
-        button_layout.addWidget(save_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(load_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(fast_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(import_button, alignment=Qt.AlignRight)
+        button_layout.addWidget(save_button)
+        button_layout.addWidget(load_button)
+        button_layout.addWidget(fast_button)
+        button_layout.addWidget(import_button)
 
         setting_layout = QGridLayout()
-        setting_layout.addLayout(form_layout, 0, 0, 1, 1)
-        setting_layout.addWidget(self.column_view, 1, 0, 1, 1)
-        setting_layout.addLayout(button_layout, 2, 0, 1, 1)
+        setting_layout.addLayout(form_layout, 0, 0)
+        setting_layout.addWidget(self.column_view, 1, 0)
+        setting_layout.addLayout(button_layout, 2, 0)
         import_group.setLayout(setting_layout)
 
         main_layout = QGridLayout()
-        main_layout.addWidget(file_group, 0, 0, 1, 1)
-        main_layout.addWidget(import_group, 1, 0, 1, 1)
+        main_layout.addWidget(file_group, 0, 0)
+        main_layout.addWidget(import_group, 1, 0)
         self.setLayout(main_layout)
 
         file_button.clicked.connect(self.load_file)

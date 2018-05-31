@@ -6,7 +6,6 @@ import sqlite3
 import pandas as pd
 from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QTableView, QComboBox, QPushButton, QFileDialog, QMessageBox,
                              QHBoxLayout, QGridLayout, QSizePolicy)
-from PyQt5.QtCore import Qt
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Alignment
 from program.preview_model import PreviewModel
@@ -27,8 +26,8 @@ class ExportFrame(QFrame):
         table_button = QPushButton('&Refresh')
         table_button.setFixedWidth(100)
         table_layout = QGridLayout()
-        table_layout.addWidget(self.table_combo, 0, 0, 1, 1)
-        table_layout.addWidget(table_button, 0, 1, 1, 1)
+        table_layout.addWidget(self.table_combo, 0, 0)
+        table_layout.addWidget(table_button, 0, 1)
         table_group.setLayout(table_layout)
         table_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
@@ -48,19 +47,19 @@ class ExportFrame(QFrame):
         self.save_button.setEnabled(False)
         button_layout = QHBoxLayout()
         button_layout.addStretch()
-        button_layout.addWidget(QLabel('Date Format'), alignment=Qt.AlignRight)
-        button_layout.addWidget(self.format_combo, alignment=Qt.AlignRight)
-        button_layout.addWidget(file_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(self.export_button, alignment=Qt.AlignRight)
-        button_layout.addWidget(self.save_button, alignment=Qt.AlignRight)
+        button_layout.addWidget(QLabel('Date Format'))
+        button_layout.addWidget(self.format_combo)
+        button_layout.addWidget(file_button)
+        button_layout.addWidget(self.export_button)
+        button_layout.addWidget(self.save_button)
         preview_layout = QGridLayout()
-        preview_layout.addWidget(self.preview_view, 0, 0, 1, 1)
-        preview_layout.addLayout(button_layout, 1, 0, 1, 1)
+        preview_layout.addWidget(self.preview_view, 0, 0)
+        preview_layout.addLayout(button_layout, 1, 0)
         preview_group.setLayout(preview_layout)
 
         main_layout = QGridLayout()
-        main_layout.addWidget(table_group, 0, 0, 1, 1)
-        main_layout.addWidget(preview_group, 1, 0, 1, 1)
+        main_layout.addWidget(table_group, 0, 0)
+        main_layout.addWidget(preview_group, 1, 0)
         self.setLayout(main_layout)
 
         table_button.clicked.connect(self.get_table)
@@ -93,8 +92,8 @@ class ExportFrame(QFrame):
                     self.preview_view.setModel(self.model)
                 else:
                     QMessageBox().information(self, 'Error', 'No Result', QMessageBox.Close)
-            except sqlite3.OperationalError as error:
-                QMessageBox().warning(self, 'Error', f'{error}', QMessageBox.Close)
+            except sqlite3.OperationalError as e:
+                QMessageBox().warning(self, 'Error', f'{e}', QMessageBox.Close)
             c.close()
 
     def export_file(self):
