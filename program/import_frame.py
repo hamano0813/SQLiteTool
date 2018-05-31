@@ -112,6 +112,8 @@ class ImportFrame(QFrame):
         self.column_view.setColumnWidth(1, 125)
 
     def import_data(self):
+        if not self.file_line.text():
+            return
         self.sender().setEnabled(False)
         df = pd.read_excel(self.file_line.text(), self.sheet_combo.currentText(), header=self.header_spin.value() - 1,
                            usecols=self.model.usecols, dtype=self.model.dtype, parse_dates=self.model.parse_dates,
