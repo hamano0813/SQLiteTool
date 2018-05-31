@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from PyQt5.QtWidgets import (QFrame, QGroupBox, QTextEdit, QPushButton, QFileDialog, QHBoxLayout, QVBoxLayout,
-                             QMessageBox)
+from PyQt5.QtWidgets import QFrame, QGroupBox, QPushButton, QFileDialog, QHBoxLayout, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import Qt
 from program.sqlite_highlighter import SQLiteHighlighter
+from program.sqlite_completer import SQLiteCompleterText
 
 
 class OperateFrame(QFrame):
@@ -15,7 +15,7 @@ class OperateFrame(QFrame):
     def __init__(self, *args):
         super(OperateFrame, self).__init__(*args)
         sql_group = QGroupBox('SQL Database Operate', self)
-        self.stmt_text = QTextEdit()
+        self.stmt_text = SQLiteCompleterText()
         self.stmt_text.setFixedSize(860, 585)
         self.stmt_text.setStatusTip('split with ";"')
         self.highlighter = SQLiteHighlighter(self.stmt_text.document())

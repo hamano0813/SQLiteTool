@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QTableView, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout,
-                             QMessageBox)
+from PyQt5.QtWidgets import QLabel, QFrame, QGroupBox, QTableView, QPushButton, QHBoxLayout, QVBoxLayout, QMessageBox
 from PyQt5.QtCore import Qt
 from program.preview_model import PreviewModel
 from program.sqlite_highlighter import SQLiteHighlighter
+from program.sqlite_completer import SQLiteCompleterText
 
 
 class PreviewFrame(QFrame):
@@ -16,7 +16,7 @@ class PreviewFrame(QFrame):
     def __init__(self, *args):
         super(PreviewFrame, self).__init__(*args)
         select_group = QGroupBox('Select SQL')
-        self.select_text = QTextEdit()
+        self.select_text = SQLiteCompleterText()
         self.select_text.setFixedSize(750, 130)
         self.highlighter = SQLiteHighlighter(self.select_text.document())
         select_button = QPushButton('&View')
