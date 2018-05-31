@@ -5,7 +5,7 @@ import os
 import sqlite3
 import pandas as pd
 from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QTableView, QComboBox, QPushButton, QFileDialog, QMessageBox,
-                             QHBoxLayout, QVBoxLayout)
+                             QHBoxLayout, QGridLayout, QSizePolicy)
 from PyQt5.QtCore import Qt
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Alignment
@@ -19,22 +19,21 @@ class ExportFrame(QFrame):
     writer: pd.ExcelWriter = None
     file_path: str = None
 
+    # noinspection PyArgumentList
     def __init__(self, *args):
         super(ExportFrame, self).__init__(*args)
         table_group = QGroupBox('Select Table')
         self.table_combo = QComboBox()
-        self.table_combo.setFixedWidth(750)
         table_button = QPushButton('&Refresh')
         table_button.setFixedWidth(100)
-        table_layout = QHBoxLayout()
-        table_layout.addWidget(self.table_combo, alignment=Qt.AlignCenter)
-        table_layout.addWidget(table_button, alignment=Qt.AlignCenter)
+        table_layout = QGridLayout()
+        table_layout.addWidget(self.table_combo, 0, 0, 1, 1)
+        table_layout.addWidget(table_button, 0, 1, 1, 1)
         table_group.setLayout(table_layout)
-        table_group.setFixedWidth(884)
+        table_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         preview_group = QGroupBox('Table Data')
         self.preview_view = QTableView()
-        self.preview_view.setFixedSize(860, 516)
         self.format_combo = QComboBox()
         self.format_combo.addItems(['YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY'])
         self.format_combo.setEditable(True)
@@ -54,16 +53,14 @@ class ExportFrame(QFrame):
         button_layout.addWidget(file_button, alignment=Qt.AlignRight)
         button_layout.addWidget(self.export_button, alignment=Qt.AlignRight)
         button_layout.addWidget(self.save_button, alignment=Qt.AlignRight)
-        preview_layout = QVBoxLayout()
-        preview_layout.addWidget(self.preview_view, alignment=Qt.AlignCenter)
-        preview_layout.addLayout(button_layout)
+        preview_layout = QGridLayout()
+        preview_layout.addWidget(self.preview_view, 0, 0, 1, 1)
+        preview_layout.addLayout(button_layout, 1, 0, 1, 1)
         preview_group.setLayout(preview_layout)
-        preview_group.setFixedWidth(884)
 
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(table_group, alignment=Qt.AlignCenter)
-        main_layout.addWidget(preview_group, alignment=Qt.AlignCenter)
-        main_layout.addStretch()
+        main_layout = QGridLayout()
+        main_layout.addWidget(table_group, 0, 0, 1, 1)
+        main_layout.addWidget(preview_group, 1, 0, 1, 1)
         self.setLayout(main_layout)
 
         table_button.clicked.connect(self.get_table)

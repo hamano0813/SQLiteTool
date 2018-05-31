@@ -6,13 +6,13 @@ import sys
 from program import MainWindow
 
 __author__ = 'Hamano'
-__version__ = '0.9'
+__version__ = '1.0'
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setStyleSheet("""*{font: 9pt "Arial";}""")
+    app.setStyleSheet("""*{font: 10pt "Arial";}""")
     # noinspection PyCallByClass,PyArgumentList
     app.setStyle(QStyleFactory.create("Fusion"))
     window = MainWindow()
-    window.show()
+    window.showMaximized()
     sys.exit(app.exec_())

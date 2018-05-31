@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from PyQt5.QtWidgets import QFrame, QGroupBox, QPushButton, QFileDialog, QHBoxLayout, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QFrame, QGroupBox, QPushButton, QFileDialog, QHBoxLayout, QMessageBox, QGridLayout
 from PyQt5.QtCore import Qt
 from program.sqlite_highlighter import SQLiteHighlighter
 from program.sqlite_completer import SQLiteCompleterText
@@ -12,11 +12,11 @@ class OperateFrame(QFrame):
     conn: sqlite3.connect = None
     path: str = './setting/'
 
+    # noinspection PyArgumentList
     def __init__(self, *args):
         super(OperateFrame, self).__init__(*args)
         sql_group = QGroupBox('SQL Database Operate', self)
         self.stmt_text = SQLiteCompleterText()
-        self.stmt_text.setFixedSize(860, 585)
         self.stmt_text.setStatusTip('split with ";"')
         self.highlighter = SQLiteHighlighter(self.stmt_text.document())
         save_button = QPushButton('&Save')
@@ -30,14 +30,13 @@ class OperateFrame(QFrame):
         button_layout.addWidget(save_button, alignment=Qt.AlignRight)
         button_layout.addWidget(load_button, alignment=Qt.AlignRight)
         button_layout.addWidget(execute_button, alignment=Qt.AlignRight)
-        sql_layout = QVBoxLayout()
-        sql_layout.addWidget(self.stmt_text, alignment=Qt.AlignCenter)
-        sql_layout.addLayout(button_layout)
+        sql_layout = QGridLayout()
+        sql_layout.addWidget(self.stmt_text, 0, 0, 1, 1)
+        sql_layout.addLayout(button_layout, 1, 0, 1, 1)
         sql_group.setLayout(sql_layout)
-        sql_group.setFixedWidth(884)
 
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(sql_group, alignment=Qt.AlignCenter)
+        main_layout = QGridLayout()
+        main_layout.addWidget(sql_group, 0, 0, 1, 1)
         self.setLayout(main_layout)
 
         save_button.clicked.connect(self.save_sql)

@@ -6,7 +6,7 @@ import sqlite3
 import numpy as np
 import pandas as pd
 from PyQt5.QtWidgets import (QFrame, QGroupBox, QLineEdit, QComboBox, QSpinBox, QTableView, QPushButton, QFileDialog,
-                             QFormLayout, QHBoxLayout, QVBoxLayout)
+                             QFormLayout, QHBoxLayout, QGridLayout, QSizePolicy)
 from PyQt5.QtCore import Qt
 from openpyxl import load_workbook
 from openpyxl.workbook.workbook import Workbook
@@ -24,19 +24,19 @@ class ImportFrame(QFrame):
     model = ImportModel([])
     type_delegate = TypeDelegate()
 
+    # noinspection PyArgumentList
     def __init__(self, *args):
         super(ImportFrame, self).__init__(*args)
         file_group = QGroupBox('Excel File')
         self.file_line = QLineEdit()
-        self.file_line.setFixedWidth(750)
         self.file_line.setReadOnly(True)
         file_button = QPushButton('Load')
         file_button.setFixedWidth(100)
-        file_layout = QHBoxLayout()
-        file_layout.addWidget(self.file_line, alignment=Qt.AlignCenter)
-        file_layout.addWidget(file_button, alignment=Qt.AlignCenter)
+        file_layout = QGridLayout()
+        file_layout.addWidget(self.file_line, 0, 0, 1, 1)
+        file_layout.addWidget(file_button, 0, 1, 1, 1)
         file_group.setLayout(file_layout)
-        file_group.setFixedWidth(884)
+        file_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         import_group = QGroupBox('Import Settings')
         self.sheet_combo = QComboBox()
@@ -53,7 +53,6 @@ class ImportFrame(QFrame):
         form_layout.addRow('Table Name', self.name_line)
         form_layout.addRow('If Table Exists', self.exists_combo)
         self.column_view = QTableView()
-        self.column_view.setFixedSize(860, 400)
         save_button = QPushButton('&Save')
         save_button.setFixedWidth(100)
         load_button = QPushButton('&Load')
@@ -68,16 +67,16 @@ class ImportFrame(QFrame):
         button_layout.addWidget(load_button, alignment=Qt.AlignRight)
         button_layout.addWidget(fast_button, alignment=Qt.AlignRight)
         button_layout.addWidget(import_button, alignment=Qt.AlignRight)
-        setting_layout = QVBoxLayout()
-        setting_layout.addLayout(form_layout)
-        setting_layout.addWidget(self.column_view, alignment=Qt.AlignCenter)
-        setting_layout.addLayout(button_layout)
+
+        setting_layout = QGridLayout()
+        setting_layout.addLayout(form_layout, 0, 0, 1, 1)
+        setting_layout.addWidget(self.column_view, 1, 0, 1, 1)
+        setting_layout.addLayout(button_layout, 2, 0, 1, 1)
         import_group.setLayout(setting_layout)
 
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(file_group, alignment=Qt.AlignCenter)
-        main_layout.addWidget(import_group, alignment=Qt.AlignCenter)
-        main_layout.addStretch()
+        main_layout = QGridLayout()
+        main_layout.addWidget(file_group, 0, 0, 1, 1)
+        main_layout.addWidget(import_group, 1, 0, 1, 1)
         self.setLayout(main_layout)
 
         file_button.clicked.connect(self.load_file)

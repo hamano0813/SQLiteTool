@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import (QWidget, QTabWidget, QLineEdit, QPushButton, QGroupBox, QFileDialog,
-                             QHBoxLayout, QVBoxLayout)
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QTabWidget, QLineEdit, QPushButton, QGroupBox, QFileDialog, QGridLayout
 from program.import_frame import ImportFrame
 from program.preview_frame import PreviewFrame
 from program.export_frame import ExportFrame
@@ -15,25 +13,24 @@ class MainWindow(QWidget):
     conn: sqlite3.connect = None
     path: str = './'
 
+    # noinspection PyArgumentList
     def __init__(self, *args):
         super(MainWindow, self).__init__(*args)
         database_group = QGroupBox('Database Setting')
         self.file_path = QLineEdit()
-        self.file_path.setFixedWidth(686)
         self.file_path.setReadOnly(True)
         self.new_button = QPushButton('Load')
         self.new_button.setFixedWidth(100)
         connect_button = QPushButton('&Connect')
         connect_button.setFixedWidth(100)
         connect_button.setCheckable(True)
-        database_layout = QHBoxLayout()
-        database_layout.addWidget(self.file_path, alignment=Qt.AlignCenter)
-        database_layout.addWidget(self.new_button, alignment=Qt.AlignCenter)
-        database_layout.addWidget(connect_button, alignment=Qt.AlignCenter)
+        database_layout = QGridLayout()
+        database_layout.addWidget(self.file_path, 0, 0, 1, 1)
+        database_layout.addWidget(self.new_button, 0, 1, 1, 1)
+        database_layout.addWidget(connect_button, 0, 2, 1, 1)
         database_group.setLayout(database_layout)
 
         self.tab = QTabWidget()
-        self.tab.setFixedWidth(920)
         self.import_frame = ImportFrame()
         self.import_frame.setEnabled(False)
         self.preview_frame = PreviewFrame()
@@ -47,12 +44,10 @@ class MainWindow(QWidget):
         self.tab.addTab(self.operate_frame, 'Operate Data')
         self.tab.addTab(self.export_frame, 'Export Data')
 
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(database_group, alignment=Qt.AlignCenter)
-        main_layout.addWidget(self.tab, alignment=Qt.AlignCenter)
-        main_layout.addStretch()
+        main_layout = QGridLayout()
+        main_layout.addWidget(database_group, 0, 0, 1, 1)
+        main_layout.addWidget(self.tab, 1, 0, 1, 1)
         self.setLayout(main_layout)
-        self.setFixedSize(950, 800)
         self.setWindowTitle('SQLite Tool')
         self.new_button.clicked.connect(self.new_database)
         connect_button.clicked.connect(self.connect_database)
