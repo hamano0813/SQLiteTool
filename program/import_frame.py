@@ -108,8 +108,8 @@ class ImportFrame(QFrame):
         self.model = ImportModel([cell.value for cell in list(self.import_ws.rows)[self.header_spin.value() - 1]])
         self.column_view.setModel(self.model)
         self.column_view.setItemDelegateForColumn(1, self.type_delegate)
-        self.column_view.setColumnWidth(0, 700)
-        self.column_view.setColumnWidth(1, 125)
+        self.column_view.setColumnWidth(0, 500)
+        self.column_view.setColumnWidth(1, 150)
 
     def import_data(self):
         if not self.file_line.text():

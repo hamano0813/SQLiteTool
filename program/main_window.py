@@ -49,6 +49,7 @@ class MainWindow(QWidget):
         main_layout.addWidget(self.tab, 1, 0)
         self.setLayout(main_layout)
         self.setWindowTitle('SQLite Tool')
+        self.setMinimumWidth(800)
         self.new_button.clicked.connect(self.new_database)
         connect_button.clicked.connect(self.connect_database)
 
