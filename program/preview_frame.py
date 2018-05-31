@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from PyQt5.QtWidgets import QLabel, QFrame, QGroupBox, QTableView, QPushButton, QVBoxLayout, QMessageBox, QGridLayout, QSizePolicy
+from PyQt5.QtWidgets import QLabel, QFrame, QGroupBox, QTableView, QPushButton, QMessageBox, QGridLayout
 from PyQt5.QtCore import Qt
 from program.preview_model import PreviewModel
 from program.sqlite_highlighter import SQLiteHighlighter
@@ -13,6 +13,7 @@ class PreviewFrame(QFrame):
     conn: sqlite3.connect = None
     model: PreviewModel = None
 
+    # noinspection PyArgumentList
     def __init__(self, *args):
         super(PreviewFrame, self).__init__(*args)
         select_group = QGroupBox('Select SQL')

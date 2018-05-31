@@ -8,6 +8,7 @@
       <w>ifnull</w>
       <w>julianday</w>
       <w>ltrim</w>
+      <w>openpyxl</w>
       <w>printf</w>
       <w>randomblob</w>
       <w>rtrim</w>
@@ -17,6 +18,7 @@
       <w>tname</w>
       <w>typenames</w>
       <w>usecols</w>
+      <w>xlrd</w>
       <w>xlsx</w>
       <w>yyyy</w>
       <w>zeroblob</w>

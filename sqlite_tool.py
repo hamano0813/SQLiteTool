@@ -3,7 +3,7 @@
 
 from PyQt5.QtWidgets import QApplication, QStyleFactory
 import sys
-from program import MainWindow
+from program.main_window import MainWindow
 
 __author__ = 'Hamano'
 __version__ = '1.0'
