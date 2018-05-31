@@ -4,10 +4,10 @@
 from PyQt5.QtWidgets import (QWidget, QTabWidget, QLineEdit, QPushButton, QGroupBox, QFileDialog,
                              QHBoxLayout, QVBoxLayout)
 from PyQt5.QtCore import Qt
-from import_widget import ImportFrame
-from preview_widget import PreviewFrame
-from export_widget import ExportFrame
-from operate_widget import OperateFrame
+from program.import_frame import ImportFrame
+from program.preview_frame import PreviewFrame
+from program.export_frame import ExportFrame
+from program.operate_frame import OperateFrame
 import sqlite3
 
 

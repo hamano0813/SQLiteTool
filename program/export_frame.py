@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QTableView, QComboBox, Q
 from PyQt5.QtCore import Qt
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Alignment
-from custom import PreviewModel
+from program.preview_model import PreviewModel
 
 
 class ExportFrame(QFrame):

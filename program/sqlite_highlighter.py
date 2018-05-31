@@ -9,7 +9,6 @@ class SQLiteHighlighter(QSyntaxHighlighter):
     rules = []
     normal_fmt = QTextCharFormat()
     normal_fmt.setFont(QFont('Consolas'))
-    # normal_fmt.setFontWeight(QFont.Bold)
     normal_fmt.setFontPointSize(11)
 
     def __init__(self, parent=None):

@@ -5,8 +5,8 @@ import sqlite3
 from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QTableView, QTextEdit, QPushButton, QHBoxLayout, QVBoxLayout,
                              QMessageBox)
 from PyQt5.QtCore import Qt
-from custom import PreviewModel
-from custom import SQLiteHighlighter
+from program.preview_model import PreviewModel
+from program.sqlite_highlighter import SQLiteHighlighter
 
 
 class PreviewFrame(QFrame):

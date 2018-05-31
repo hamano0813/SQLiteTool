@@ -11,8 +11,8 @@ from PyQt5.QtCore import Qt
 from openpyxl import load_workbook
 from openpyxl.workbook.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
-from import_widget.import_model import ImportModel
-from import_widget.import_delegate import TypeDelegate
+from program.import_model import ImportModel
+from program.import_delegate import TypeDelegate
 
 
 class ImportFrame(QFrame):
