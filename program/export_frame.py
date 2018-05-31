@@ -37,7 +37,7 @@ class ExportFrame(QFrame):
         self.format_combo = QComboBox()
         self.format_combo.addItems(['YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY'])
         self.format_combo.setEditable(True)
-        self.format_combo.setFixedWidth(100)
+        self.format_combo.setFixedWidth(120)
         file_button = QPushButton('&File')
         file_button.setFixedWidth(100)
         self.export_button = QPushButton('&Export')

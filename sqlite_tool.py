@@ -14,5 +14,5 @@ if __name__ == '__main__':
     # noinspection PyCallByClass,PyArgumentList
     app.setStyle(QStyleFactory.create("Fusion"))
     window = MainWindow()
-    window.showMaximized()
+    window.show()
     sys.exit(app.exec_())
