@@ -24,18 +24,15 @@ words.sort()
 class SQLiteCompleterText(QTextEdit):
     def __init__(self, parent=None):
         super(SQLiteCompleterText, self).__init__(parent)
-        self._completer = QCompleter(words)
-        self._completer.setWrapAround(False)
-        self._completer.setWidget(self)
-        self._completer.setCompletionMode(QCompleter.PopupCompletion)
-        self._completer.activated.connect(self.insertCompletion)
-
-    def completer(self):
-        return self._completer
+        self.cp = QCompleter(words)
+        self.cp.setWrapAround(False)
+        self.cp.setWidget(self)
+        self.cp.setCompletionMode(QCompleter.PopupCompletion)
+        self.cp.activated.connect(self.insertCompletion)
 
     def insertCompletion(self, completion):
         tc = self.textCursor()
-        extra = len(completion) - len(self._completer.completionPrefix())
+        extra = len(completion) - len(self.cp.completionPrefix())
         tc.movePosition(QTextCursor.Left)
         tc.movePosition(QTextCursor.EndOfWord)
         tc.insertText(completion[-extra:])
@@ -47,11 +44,11 @@ class SQLiteCompleterText(QTextEdit):
         return tc.selectedText()
 
     def focusInEvent(self, e):
-        self._completer.setWidget(self)
+        self.cp.setWidget(self)
         super(SQLiteCompleterText, self).focusInEvent(e)
 
     def keyPressEvent(self, e):
-        if self._completer.popup().isVisible():
+        if self.cp.popup().isVisible():
             if e.key() in (Qt.Key_Enter, Qt.Key_Return, Qt.Key_Escape, Qt.Key_Tab, Qt.Key_Backtab):
                 e.ignore()
                 return
@@ -64,20 +61,18 @@ class SQLiteCompleterText(QTextEdit):
         if ctrl_or_shift and len(e.text()) == 0:
             return
 
-        eow = "~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="
+        eo = "~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="
         has_modifier = (e.modifiers() != Qt.NoModifier) and not ctrl_or_shift
         completion_prefix = self.textUnderCursor()
 
-        if not is_shortcut and (has_modifier or len(e.text()) == 0
-                                or len(completion_prefix) < 1 or e.text()[-1] in eow):
-            self._completer.popup().hide()
+        if not is_shortcut and (has_modifier or len(e.text()) == 0 or len(completion_prefix) < 1 or e.text()[-1] in eo):
+            self.cp.popup().hide()
             return
 
-        if completion_prefix != self._completer.completionPrefix():
-            self._completer.setCompletionPrefix(completion_prefix)
-            self._completer.popup().setCurrentIndex(self._completer.completionModel().index(0, 0))
+        if completion_prefix != self.cp.completionPrefix():
+            self.cp.setCompletionPrefix(completion_prefix)
+            self.cp.popup().setCurrentIndex(self.cp.completionModel().index(0, 0))
 
         cr = self.cursorRect()
-        cr.setWidth(self._completer.popup().sizeHintForColumn(0) +
-                    self._completer.popup().verticalScrollBar().sizeHint().width())
-        self._completer.complete(cr)
+        cr.setWidth(self.cp.popup().sizeHintForColumn(0) + self.cp.popup().verticalScrollBar().sizeHint().width())
+        self.cp.complete(cr)
