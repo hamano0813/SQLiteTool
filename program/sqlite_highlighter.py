@@ -36,7 +36,7 @@ class SQLiteHighlighter(QSyntaxHighlighter):
         self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), tname_fmt) for pattern in typenames])
         self.rules.extend([(QRegExp(f'\\b{pattern}\\b', Qt.CaseInsensitive), kw_fmt) for pattern in keywords])
         self.rules.extend([(QRegExp(f'\\b{pattern}(?=\\()', Qt.CaseInsensitive), func_fmt) for pattern in functions])
-        self.rules.append((QRegExp('''(".*"|'.*')'''), text_fmt))
+        self.rules.append((QRegExp('''(".*"|'[\\w\\s\\+\\-\\*/\\u4e00-\\u9fa5]*')'''), text_fmt))
         self.rules.append((QRegExp('\\[([^\\[\\]]*)\\]'), name_fmt))
         self.rules.append((QRegExp('--(\\w|\\W|[\\u4e00-\\u9fa5])*$', Qt.CaseInsensitive), cmt_fmt))
 
