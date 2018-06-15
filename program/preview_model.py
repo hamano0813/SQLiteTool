@@ -37,10 +37,20 @@ class PreviewModel(QAbstractTableModel):
                     return pd.to_datetime(self._data[index.row()][index.column()]).strftime('%Y/%m/%d')
                 else:
                     return ''
-            return self._data[index.row()][index.column()]
+            elif self._data[index.row()][index.column()]:
+                return self._data[index.row()][index.column()]
+            return ''
         return QVariant()
 
     def flags(self, index: QModelIndex):
         if not index.isValid():
             return QVariant()
-        return Qt.ItemIsEnabled
+        return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+
+    def copy_range(self, select_range):
+        if select_range:
+            r = max([index.row() for index in select_range]) - min([index.row() for index in select_range]) + 1
+            c = max([index.column() for index in select_range]) - min([index.column() for index in select_range]) + 1
+            return '\n'.join(['\t'.join([self.data(select_range[r * rid + c * cid], Qt.DisplayRole)
+                                         for cid in range(c)])
+                              for rid in range(r)])

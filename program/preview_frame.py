@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from PyQt5.QtWidgets import QLabel, QFrame, QGroupBox, QTableView, QPushButton, QMessageBox, QGridLayout
+from PyQt5.QtWidgets import QLabel, QFrame, QGroupBox, QPushButton, QMessageBox, QGridLayout
 from PyQt5.QtCore import Qt
 from program.preview_model import PreviewModel
+from program.preview_view import PreviewView
 from program.sqlite_highlighter import SQLiteHighlighter
 from program.sqlite_completer import SQLiteCompleterText
 
@@ -27,7 +28,7 @@ class PreviewFrame(QFrame):
         select_group.setLayout(select_layout)
 
         preview_group = QGroupBox('Preview Select')
-        self.preview_view = QTableView()
+        self.preview_view = PreviewView()
         self.row_label = QLabel()
         preview_layout = QGridLayout()
         preview_layout.addWidget(self.preview_view, 0, 0)

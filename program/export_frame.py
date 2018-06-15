@@ -4,11 +4,12 @@
 import os
 import sqlite3
 import pandas as pd
-from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QTableView, QComboBox, QPushButton, QFileDialog, QMessageBox,
-                             QHBoxLayout, QGridLayout, QSizePolicy)
+from PyQt5.QtWidgets import (QLabel, QFrame, QGroupBox, QComboBox, QPushButton, QFileDialog, QMessageBox, QSizePolicy,
+                             QHBoxLayout, QGridLayout)
 from openpyxl import load_workbook
 from openpyxl.styles import Font, Alignment
 from program.preview_model import PreviewModel
+from program.preview_view import PreviewView
 
 
 class ExportFrame(QFrame):
@@ -32,7 +33,7 @@ class ExportFrame(QFrame):
         table_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         preview_group = QGroupBox('Table Data')
-        self.preview_view = QTableView()
+        self.preview_view = PreviewView()
         self.format_combo = QComboBox()
         self.format_combo.addItems(['YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY'])
         self.format_combo.setEditable(True)
