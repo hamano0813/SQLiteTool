@@ -47,7 +47,7 @@ class PreviewFrame(QFrame):
             c = self.conn.cursor()
             c.execute('DROP VIEW IF EXISTS temp;')
             try:
-                c.execute(f'CREATE VIEW temp AS {self.select_text.toPlainText()}')
+                c.execute(f'CREATE VIEW temp AS {self.select_text.toPlainText().split(";")[0]}')
                 data = c.execute(f'SELECT * FROM temp;').fetchall()
                 header = [_[1] for _ in c.execute(f'PRAGMA table_info(temp);').fetchall()]
                 dtype = [_[2].upper() for _ in c.execute(f'PRAGMA table_info(temp);').fetchall()]
