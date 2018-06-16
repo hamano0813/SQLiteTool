@@ -38,7 +38,7 @@ class PreviewModel(QAbstractTableModel):
                 else:
                     return ''
             elif self._data[index.row()][index.column()]:
-                return self._data[index.row()][index.column()]
+                return str(self._data[index.row()][index.column()])
             return ''
         return QVariant()
 
