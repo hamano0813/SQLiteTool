@@ -51,6 +51,5 @@ class PreviewModel(QAbstractTableModel):
         if select_range:
             r = max([index.row() for index in select_range]) - min([index.row() for index in select_range]) + 1
             c = max([index.column() for index in select_range]) - min([index.column() for index in select_range]) + 1
-            return '\n'.join(['\t'.join([self.data(select_range[r * rid + c * cid], Qt.DisplayRole)
-                                         for cid in range(c)])
+            return '\n'.join(['\t'.join([self.data(select_range[c * rid + cid], Qt.DisplayRole) for cid in range(c)])
                               for rid in range(r)])

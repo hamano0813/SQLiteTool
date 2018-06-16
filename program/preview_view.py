@@ -14,4 +14,3 @@ class PreviewView(QTableView):
     def keyPressEvent(self, event: QKeyEvent):
         if event.key() == Qt.Key_C and event.modifiers() == Qt.ControlModifier:
             QApplication.clipboard().setText(self.model().copy_range(self.selectedIndexes()))
-            print(self.model().copy_range(self.selectedIndexes()))

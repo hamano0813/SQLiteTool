@@ -84,10 +84,10 @@ class ExportFrame(QFrame):
         if self.table_combo.currentText():
             c = self.conn.cursor()
             try:
-                data = c.execute(f'SELECT * FROM {self.table_combo.currentText()};').fetchall()
-                header = [_[1] for _ in c.execute(f'PRAGMA table_info({self.table_combo.currentText()});').fetchall()]
+                data = c.execute(f'SELECT * FROM [{self.table_combo.currentText()}];').fetchall()
+                header = [_[1] for _ in c.execute(f'PRAGMA table_info([{self.table_combo.currentText()}]);').fetchall()]
                 dtype = [_[2].upper()
-                         for _ in c.execute(f'PRAGMA table_info({self.table_combo.currentText()});').fetchall()]
+                         for _ in c.execute(f'PRAGMA table_info([{self.table_combo.currentText()}]);').fetchall()]
                 if len(data):
                     self.model = PreviewModel(data, header, dtype)
                     self.preview_view.setModel(self.model)
@@ -109,7 +109,7 @@ class ExportFrame(QFrame):
     def export_table(self):
         if self.writer and self.table_combo.currentText():
             c = self.conn.cursor()
-            parse_date = [_[1] for _ in c.execute(f'PRAGMA table_info({self.table_combo.currentText()});').fetchall()
+            parse_date = [_[1] for _ in c.execute(f'PRAGMA table_info([{self.table_combo.currentText()}]);').fetchall()
                           if _[2] in ('TIMESTAMP', 'NUM')]
             df = pd.read_sql(f'SELECT * FROM {self.table_combo.currentText()};', self.conn, parse_dates=parse_date)
             c.close()
