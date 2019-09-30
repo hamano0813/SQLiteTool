@@ -6,14 +6,12 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtCore import Qt
 from program.word_list import keywords, functions, typenames, remove_list
 
-
 words = []
-words.extend([word for word in keywords])
-words.extend([word.lower() for word in keywords])
-words.extend([word for word in functions])
-words.extend([word.upper() for word in functions])
-words.extend([word for word in typenames])
-words.extend([word.lower() for word in typenames])
+
+for w in (keywords, functions, typenames):
+    words.extend(word.lower() for word in w)
+    words.extend(word.upper() for word in w)
+
 words = set(words)
 [words.remove(i.upper()) for i in remove_list]
 [words.remove(i.lower()) for i in remove_list]
@@ -63,14 +61,14 @@ class SQLiteCompleterText(QTextEdit):
 
         eo = "~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="
         has_modifier = (e.modifiers() != Qt.NoModifier) and not ctrl_or_shift
-        completion_prefix = self.textUnderCursor()
+        cp = self.textUnderCursor()
 
-        if not is_shortcut and (has_modifier or len(e.text()) == 0 or len(completion_prefix) < 1 or e.text()[-1] in eo):
+        if not is_shortcut and (cp in words or has_modifier or len(e.text()) == 0 or len(cp) < 1 or e.text()[-1] in eo):
             self.cp.popup().hide()
             return
 
-        if completion_prefix != self.cp.completionPrefix():
-            self.cp.setCompletionPrefix(completion_prefix)
+        if cp != self.cp.completionPrefix():
+            self.cp.setCompletionPrefix(cp)
             self.cp.popup().setCurrentIndex(self.cp.completionModel().index(0, 0))
 
         cr = self.cursorRect()
